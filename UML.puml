@@ -1,0 +1,23 @@
+@startuml
+actor User
+actor Admin
+
+usecase "View Prediction Page" as U1
+usecase "Submit Data for Prediction" as U2
+usecase "View Prediction Result" as U3
+usecase "Manage Prediction Model" as A1
+usecase "Update Data" as A2
+usecase "View Logs" as A3
+
+User -> U1
+User -> U2
+User -> U3
+
+Admin -> A1
+Admin -> A2
+Admin -> A3
+
+A1 <-- A2 : includes
+A1 <-- A3 : includes
+
+@enduml

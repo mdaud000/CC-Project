@@ -1,0 +1,435 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churn Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 800px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .btn-primary {
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-area {
+            margin-top: 20px;
+        }
+        .result-area textarea {
+            margin-bottom: 10px;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar text-center">
+        <h1>Churn Prediction</h1>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center">Predict Customer Churn</h2>
+            <form action="http://localhost:5000/" method="POST">
+                <div class="form-group">
+                    <label for="query1">SeniorCitizen:</label>
+                    <select class="form-control" id="query1" name="query1">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query2">MonthlyCharges:</label>
+                    <textarea class="form-control" id="query2" name="query2" rows="2" autofocus></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="query3">TotalCharges:</label>
+                    <textarea class="form-control" id="query3" name="query3" rows="2" autofocus></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="query4">Gender:</label>
+                    <select class="form-control" id="query4" name="query4">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query5">Partner:</label>
+                    <select class="form-control" id="query5" name="query5">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query6">Dependents:</label>
+                    <select class="form-control" id="query6" name="query6">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query7">PhoneService:</label>
+                    <select class="form-control" id="query7" name="query7">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query8">MultipleLines:</label>
+                    <select class="form-control" id="query8" name="query8">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No phone service">No phone service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query9">InternetService:</label>
+                    <select class="form-control" id="query9" name="query9">
+                        <option value="DSL">DSL</option>
+                        <option value="Fiber optic">Fiber optic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query10">OnlineSecurity:</label>
+                    <select class="form-control" id="query10" name="query10">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query11">OnlineBackup:</label>
+                    <select class="form-control" id="query11" name="query11">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query12">DeviceProtection:</label>
+                    <select class="form-control" id="query12" name="query12">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query13">TechSupport:</label>
+                    <select class="form-control" id="query13" name="query13">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query14">StreamingTV:</label>
+                    <select class="form-control" id="query14" name="query14">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query15">StreamingMovies:</label>
+                    <select class="form-control" id="query15" name="query15">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query16">Contract:</label>
+                    <select class="form-control" id="query16" name="query16">
+                        <option value="Month-to-month">Month-to-month</option>
+                        <option value="One year">One year</option>
+                        <option value="Two year">Two year</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query17">PaperlessBilling:</label>
+                    <select class="form-control" id="query17" name="query17">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query18">PaymentMethod:</label>
+                    <select class="form-control" id="query18" name="query18">
+                        <option value="Electronic check">Electronic check</option>
+                        <option value="Mailed check">Mailed check</option>
+                        <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                        <option value="Credit card (automatic)">Credit card (automatic)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query19">Tenure:</label>
+                    <textarea class="form-control" id="query19" name="query19" rows="2" autofocus></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="result-area">
+            <div class="form-group">
+                <textarea class="form-control" id="output1" name="output1" rows="2" readonly>{{output1}}</textarea>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="output2" name="output2" rows="2" readonly>{{output2}}</textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+ -->
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churn Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 800px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .btn-primary {
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-area {
+            margin-top: 20px;
+        }
+        .result-area textarea {
+            margin-bottom: 10px;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar text-center">
+        <h1>Churn Prediction</h1>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center">Predict Customer Churn</h2>
+            <form action="/" method="POST">
+                <div class="form-group">
+                    <label for="query1">SeniorCitizen:</label>
+                    <select class="form-control" id="query1" name="query1">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query2">MonthlyCharges:</label>
+                    <textarea class="form-control" id="query2" name="query2" rows="2" autofocus></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="query3">TotalCharges:</label>
+                    <textarea class="form-control" id="query3" name="query3" rows="2" autofocus></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="query4">Gender:</label>
+                    <select class="form-control" id="query4" name="query4">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query5">Partner:</label>
+                    <select class="form-control" id="query5" name="query5">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query6">Dependents:</label>
+                    <select class="form-control" id="query6" name="query6">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query7">PhoneService:</label>
+                    <select class="form-control" id="query7" name="query7">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query8">MultipleLines:</label>
+                    <select class="form-control" id="query8" name="query8">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No phone service">No phone service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query9">InternetService:</label>
+                    <select class="form-control" id="query9" name="query9">
+                        <option value="DSL">DSL</option>
+                        <option value="Fiber optic">Fiber optic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query10">OnlineSecurity:</label>
+                    <select class="form-control" id="query10" name="query10">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query11">OnlineBackup:</label>
+                    <select class="form-control" id="query11" name="query11">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query12">DeviceProtection:</label>
+                    <select class="form-control" id="query12" name="query12">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query13">TechSupport:</label>
+                    <select class="form-control" id="query13" name="query13">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query14">StreamingTV:</label>
+                    <select class="form-control" id="query14" name="query14">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query15">StreamingMovies:</label>
+                    <select class="form-control" id="query15" name="query15">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="No internet service">No internet service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query16">Contract:</label>
+                    <select class="form-control" id="query16" name="query16">
+                        <option value="Month-to-month">Month-to-month</option>
+                        <option value="One year">One year</option>
+                        <option value="Two year">Two year</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query17">PaperlessBilling:</label>
+                    <select class="form-control" id="query17" name="query17">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query18">PaymentMethod:</label>
+                    <select class="form-control" id="query18" name="query18">
+                        <option value="Electronic check">Electronic check</option>
+                        <option value="Mailed check">Mailed check</option>
+                        <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                        <option value="Credit card (automatic)">Credit card (automatic)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="query19">Tenure:</label>
+                    <textarea class="form-control" id="query19" name="query19" rows="2" autofocus></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="query20">Email:</label>
+                    <textarea class="form-control" id="query20" name="query20" rows="2" autofocus></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="result-area">
+            <div class="form-group">
+                <textarea class="form-control" id="output1" name="output1" rows="2" readonly>{{output1}}</textarea>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="output2" name="output2" rows="2" readonly>{{output2}}</textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
